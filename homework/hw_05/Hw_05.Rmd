@@ -1,0 +1,65 @@
+---
+title: "MICR 490 Homework 5"
+output: github_document
+---
+
+This is an [R Markdown] (http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+#### installing packages
+``` {r}
+install.packages("knitr")
+install.packages("rmarkdown")
+install.packages("nycflights13")
+library(nycflights13)
+library(tidyverse)
+library(dplyr) 
+library(knitr)
+
+```
+
+
+## number 1
+```{r}
+?nycflights13::flights
+```
+
+## number 2
+```{r}
+glimpse(flights) 
+## there are 336 rows and 776 columns
+```  
+## number 3  
+```{r}
+## flights delayed 2 or more hours
+delflight2 <- filter(flights, dep_delay >= 2) 
+
+## 120 rows
+## 382 columns
+
+glimpse(delflight2)
+
+## fraction of delayed flights
+
+fraction_delayed <- 120382/336776
+
+## 0.35745 or ~36%
+``` 
+ 
+## number 4
+```{r}
+comb_airline_flightnum <- mutate(flights, flightnum = paste0( carrier, flight))
+## made new column with airline and flight number
+glimpse(comb_airline_flightnum) 
+## made sure new column was made
+```
+ 
+## number 5
+```{r}
+grouped_flights <- group_by(flights, carrier, tailnum)     
+### grouped the flights
+summarise(grouped_flights, n()) 
+```
+
+
+
+
