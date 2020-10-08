@@ -1,0 +1,56 @@
+---
+title: "MICR 490 Homework 7 Bad Plot"
+output: github_document
+---
+
+
+``` {r}
+library(knitr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(nycflights13)
+```
+
+
+```{r}
+#####using weather data from this dataset
+nycflights13::weather
+glimpse(weather)
+```
+
+
+```{r}
+##### filtered the data to only 
+##### show temps less than or equal to 30 degrees
+cold_flights <- filter(weather,temp <= 30)
+glimpse(cold_flights)
+```
+
+```{r}
+##### filtered the data to only show temps greater than or equal to 80 degrees
+hot_flights <- filter(weather, temp >= 80)
+glimpse(hot_flights)
+```
+
+## This is the bad plot. 
+#### You cannot tell what I'm trying to show at all. It's supposed to show the months with the amount of times flights were taken with outside temps lower than or equal to 30 degrees
+
+``` {r}
+bad_plot2 <- ggplot(data=cold_flights) + geom_rug(mapping=aes(x=month,y=temp,color=dewp)) + theme_classic()
+
+print(bad_plot2)
+
+```
+
+
+## This plot is my good plot
+#### showing amt of flights >= 80 deg outside months and added: gradient bar, title, grid lines
+```{r}
+##### This plot is my good plot
+##### showing amt of flights >= 80 deg outside months
+#####  added: gradient bar, title, grid lines
+good_plot2 <- ggplot(data=hot_flights) + geom_point(aes(x = month, y = temp, color=temp)) + theme_bw() + scale_color_viridis_c() + ggtitle("Summertime Hot Flights")
+
+print(good_plot2)
+```
