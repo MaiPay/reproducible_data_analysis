@@ -1,0 +1,107 @@
+---
+title: "MICR 490 Homework 8"
+output: github_document
+---
+
+``` {r}
+library(tidyverse)
+library(dplyr)
+```
+
+
+##Lists, data frames, and vectors
+
+Creating the list
+``` {r}
+the_list <- list(the_data_frame = mtcars,
+                 d_f_2 = USArrests,
+                 the_vector = letters)
+```
+
+Accessing the first element by $ sign
+```{r}
+the_list $the_data_frame
+```
+Accessing the second element by number
+```{r}
+the_list[[2]]
+```
+Accessing the third element by name
+```{r}
+the_list["the_vector"]
+```
+
+
+Accessing the mpg column by name
+```{r}
+mtcars["mpg"]
+```
+
+Accessing the mpg column by $ sign
+```{r}
+mtcars$mpg
+```
+
+
+Creating the new column for Displacement per Cylinder by accessing each column individually, naming them each, then dividing them to create new column.  
+Glimpse to see if it worked correctly
+```{r}
+disp <- mtcars$disp
+cyl <- mtcars$cyl
+disp_cyl = (disp/cyl)
+mtcars$displacementpercylinder=disp_cyl
+glimpse(mtcars)
+```
+
+
+Created new row mpg/disp called mpg.disp
+```{r}
+mpg_disp <- mutate(mtcars, mpg.disp= mpg*disp)
+glimpse(mpg_disp)
+```
+
+Showing the single column of my mpg.disp data, tidyverse functions return data frames
+```{r}
+select(mpg_disp,mpg.disp)
+```
+``` {r}
+num <- c(9,8,7,6)
+as.factor(num)
+```
+
+
+``` {r}
+as.numeric(num)
+```
+
+As a factor, the vector also shows levels and it arranges the numbers in numerical order. as a numeric vector, it only displays the numbers as I wrote them.
+
+## Exploratory Data Analysis
+
+I decided to use the airports data from the nyc flights data set
+```{r}
+library(nycflights13)
+airports <- nycflights13::airports
+glimpse(airports)
+```
+
+I created vectors from the Nycflights airports data set with just the airport names and the time zone for the airports
+```{r}
+nameports <- airports["name"]
+timeports <- airports["tzone"]
+```
+
+Created a data frame with just the airport names and their time zones. 
+```{r}
+Nametime.data <- data.frame(nameports,timeports)
+```
+
+Showing the data in its own data frame
+```{r}
+glimpse(Nametime.data)
+```
+
+Created a table of the data
+```{r}
+table1 <- print.data.frame(Nametime.data)
+```
