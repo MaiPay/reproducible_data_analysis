@@ -1,0 +1,55 @@
+---
+title: "MICR 490 Homework 10"
+output: github_document
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(readxl)
+```
+
+## Linear Model
+````{r}
+diamonds
+
+### price with carat
+price_carat <- lm(price~carat, data=diamonds)
+summary(price_carat) 
+ 
+### price with carat and color
+p_cc<- lm(price~carat+color, data= diamonds)
+summary(p_cc)
+
+
+```
+
+```{r}
+d <- diamonds
+### p_cc with character for color
+p_cc2 <- lm(diamonds$price~diamonds$carat+ as.character(diamonds$color), data=d)
+summary(p_cc2)
+
+###color is not being included in numerical analysis 
+
+price_predict <- 
+```
+
+```{r}
+diamonds
+plot(diamonds$carat,diamonds$price)
+```
+```{r}
+diamonds
+plot(diamonds$carat,diamonds$price)
+abline(lm(diamonds$price~diamonds$carat))
+```
+
+```{r}
+gplot <- ggplot(diamonds)+geom_point(mapping=aes(x=carat, y=price, color=color))+geom_smooth(method=p_cc2)
+
+print(gplot)
+```
+ 
