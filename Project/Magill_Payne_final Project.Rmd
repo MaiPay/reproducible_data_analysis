@@ -4,6 +4,14 @@ output: github_document
 name: "Tatum Magill, Maia Payne"
 ---
 
+
+## Comparing UNIVERSITY data to data of the entire county -> can show case count, yada yada. 
+
+linear model of University and plot on graph of entire county data :) maybe case per day
+
+so UT AND VANDERBILT
+
+
 ```{r}
 library(dplyr)
 library(tidyverse)
@@ -16,8 +24,37 @@ raw_data<- read.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/mas
 
 Extracting Certain Counties
 ```{r}
+
+### Knox County
 Knox_co <- filter(raw_data, county == "Knox", state == "Tennessee")
 glimpse(Knox_co)
 
+
+### Davidson County
 Davidson_co <- filter(raw_data, county == "Davidson", state == "Tennessee")
+
+```
+
+```{r}
+Vandy_raw <- read.csv("https://raw.githubusercontent.com/MaiPay/reproducible_data_analysis/master/Project/Live%20COVID%20Chart%20VU%20-%20Dashboard%20Charts.csv")
+```
+
+```{r}
+Vandy college data
+```
+
+Deaths with Cases Regression
+```{r}
+knox_dc <- lm(deaths~cases, data = Knox_co)
+summary(knox_dc)
+
+davidson_dc <- lm(deaths~cases, data= Knox_co)
+summary(davidson_dc)
+```
+
+Plots of Country and regression
+```{r}
+Kgraph <- ggplot(Knox_co, aes(x=Knox_co$cases, y=Knox_co$deaths))+geom_point(shape=1) + geom_smooth(method = lm, se = FALSE)
+
+print(Kgraph)
 ```
