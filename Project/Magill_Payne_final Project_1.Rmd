@@ -5,11 +5,10 @@ name: "Tatum Magill, Maia Payne"
 ---
 
 
-## Comparing UNIVERSITY data to data of the entire county -> can show case count, yada yada. 
+## Our goal is to compare Knox and Davidson counties Death and Covid growth to the timing of students from UTK and Vanderbilt Returning on Campus. 
 
-linear model of University and plot on graph of entire county data :) maybe case per day
+Since Vanderbilt is smaller than UTK, we'll include dates of other colleges opening in Nashville/Davidson County as well
 
-so UT AND VANDERBILT
 
 
 ```{r}
@@ -17,12 +16,12 @@ library(dplyr)
 library(tidyverse)
 library(readr)
 ```
-
+## Raw US County Covid data from NYTIMES
 ```{r}
 raw_data<- read.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 ```
 
-Extracting Certain Counties
+## Extracting Davidson and Knox Counties from Raw County Data
 ```{r}
 
 ### Knox County
@@ -39,11 +38,9 @@ Davidson_co <- filter(raw_data, county == "Davidson", state == "Tennessee")
 Vandy_raw <- read.csv("https://raw.githubusercontent.com/MaiPay/reproducible_data_analysis/master/Project/Live%20COVID%20Chart%20VU%20-%20Dashboard%20Charts.csv")
 ```
 
-```{r}
-Vandy college data
-```
+#insert Vandy data here maybe? if necessary
 
-Deaths with Cases Regression
+## Deaths with Cases Regression
 ```{r}
 knox_dc <- lm(deaths~cases, data = Knox_co)
 summary(knox_dc)
@@ -52,9 +49,31 @@ davidson_dc <- lm(deaths~cases, data= Knox_co)
 summary(davidson_dc)
 ```
 
-Plots of Country and regression
+## Knox County Plot of Deaths vs Cases
+
+The orange rectangle represents the time that students were on campus from August 19, 2020 to November 24, 2020
+
+The points and the linear regression align, but there was a jump in cases of nearly 2500 when the students returned to campus. Towards the end of the graph, the actual amount of deaths and cases are less than predicted by the regression
 ```{r}
-Kgraph <- ggplot(Knox_co, aes(x=Knox_co$cases, y=Knox_co$deaths))+geom_point(shape=1) + geom_smooth(method = lm, se = FALSE)
+Kgraph <- ggplot(Knox_co, aes(x=deaths, y=cases))+geom_point(aes(x=deaths, y = cases)) + geom_smooth(method = lm, se = FALSE) + ggtitle("COVID Deaths vs Cases in Knox County")+ annotate("rect", xmin = 52, xmax= 153, ymin = 5731, ymax= 18191, alpha =.2, color = "orange")
+
 
 print(Kgraph)
 ```
+
+## Davidson County Plot of Deaths vs Cases
+
+The black rectangle represents the time students were on Vanderbilt University's campus from August 24, 2020 to November 24, 2020.
+
+The red rectangle represents the time students were on Belmont University's campus from August 19, 2020 to November 13, 2020.
+
+The blue rectangle represents the time students were on Tennessee State University's Campus from August 31, 2020 to November 20, 2020. 
+
+```{r}
+Dgraph <- ggplot(Davidson_co, aes(x=deaths, y=cases))+geom_point(aes(x=deaths, y = cases)) + geom_smooth(method = lm, se = FALSE) + ggtitle("COVID Deaths vs Cases in Davidson County")+ annotate("rect", xmin = 246, xmax= 409, ymin = 25326, ymax= 43920, alpha =.2, color = "black") + annotate("rect", xmin = 235, xmax= 379, ymin = 24696, ymax= 39101, alpha =.2, color = "red") + annotate("rect", xmin = 259, xmax= 399, ymin = 25975, ymax= 42262, alpha =.2, color = "blue") 
+
+
+print(Dgraph)
+```
+
+It seems that the presence of college students on three major universities in the Nashville Metropolitan area had little effect on the trend of Covid cases in Davidson County. We did multiple universities to try to account for the population difference with UTK, but many of these campuses had more limits on the amount of people allowed on campus. Also, there were more online classes offered. 
