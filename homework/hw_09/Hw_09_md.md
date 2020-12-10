@@ -1,0 +1,95 @@
+MICR 490 Homework 9
+================
+
+``` r
+library(tidyverse)
+```
+
+    ## ── Attaching packages ─────────────────────────────── tidyverse 1.3.0 ──
+
+    ## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+    ## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+    ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+    ## ✓ readr   1.3.1     ✓ forcats 0.5.0
+
+    ## ── Conflicts ────────────────────────────────── tidyverse_conflicts() ──
+    ## x dplyr::filter() masks stats::filter()
+    ## x dplyr::lag()    masks stats::lag()
+
+``` r
+library(ggplot2)
+library(dplyr)
+```
+
+## Function converting Millimeters to Meters
+
+``` r
+milli_to_meter <- function (measurement_mm) {measurement_M <- (measurement_mm) * 1000 }
+
+mm_1 <- 10000
+mm_2 <- 3100
+mm_3 <- 232
+```
+
+``` r
+### mm_1, mm_2, mm_3 values to Meters
+M1 <- milli_to_meter(mm_1) ### 1+e07 meters
+M2 <- milli_to_meter(mm_2) ### 3100000 meters
+M3 <- milli_to_meter(mm_3) ### 232000 meters
+```
+
+## Both N/A Function
+
+``` r
+### creating vectors
+g <-  c(1,3,5)
+d <- c(2,4,6)
+
+### creating function
+both_na <- function (g,d) {any(is.na(g) & is.na(d))}
+
+a <- both_na(g,d) ###False, no na in my vectors
+```
+
+## Plot Function
+
+``` r
+data("diamonds")
+
+dia_plot <- function() {
+  result <- ggplot(data = diamonds, aes(x=color, y=carat)) + geom_point(size =2, color= "pink") +ggtitle("Colors of Carats")
+}
+
+print(dia_plot())
+```
+
+![](Hw_09_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+## Number 4??
+
+multi\_func \<- function(x) {if(x)}
+
+## Calculating mean of a vector
+
+``` r
+v <- c(1,3,5)
+mean_v <- function(meanv){mean(v)}
+
+mv <- mean_v(v)
+### mean equals 3
+```
+
+System Time
+
+``` r
+long <- c(1000000)
+time <- c(2000000)
+
+long_time <- function(long,time){long+time}
+
+answer<- system.time(long_time)
+glimpse(answer)
+```
+
+    ##  'proc_time' Named num [1:5] 0 0 0 0 0
+    ##  - attr(*, "names")= chr [1:5] "user.self" "sys.self" "elapsed" "user.child" ...
